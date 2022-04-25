@@ -1,0 +1,23 @@
+.pageRegister {
+	height: 100%;
+	overflow: auto;
+	background: {
+		image: url(../images/registerBGI.jpg);
+		repeat: no-repeat;
+		attachment: fixed;
+		position: center;
+		size: contain;
+	}
+	display: flex;
+	justify-content: center;
+}
+.contactSync{
+	margin-top: 25px;
+	padding: 10px;
+	height: 120px;
+	width: 200px;
+	background: rgba(76, 175, 80, 0.7);
+	border-radius: 8%;
+	display: flex;
+	align-items: center;
+}

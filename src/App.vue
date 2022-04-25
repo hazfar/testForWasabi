@@ -1,158 +1,122 @@
 <template>
-	<div id="app">
-
-        <button v-on="{
-            mousedown: numberplus,
-            mouseup: stop,
-        }">
-            ＋
-        </button>
-
-        <span>
-            {{mdfklist.length}}
-        </span>
-
-        <button v-on="{
-            mousedown: numberminus,
-            mouseup: stop,
-        }">
-            －
-        </button>
-
-        <button v-on="{
-            mousedown: numberlaplus,
-            mouseup: stop,
-        }">
-            ＋
-        </button>
-
-        <span>
-            {{numberla}}
-        </span>
-
-        <button v-on="{
-            mousedown: numberlaminus,
-            mouseup: stop,
-        }">
-            －
-        </button>
-
-        <p>{{ jiazong }}</P>
-
-        <table>
+    <div>
+        <!-- <div class="main mainbefore"> -->
             <div>
-                <tr>
-                    <th>姓名</th>
-                    <th>職務</th>
-                    <th>薪資</th>
-                </tr>
+                <router-link to="/main"></router-link>
+                <router-view></router-view>
             </div>
-            <table>
-                <tr
-                    v-for="({ job, pay }, key) in mdfklist"
-                    :key="key"
-                >
-                    <td>廖信謀</td>
-                    <td>{{ job }}</td>
-                    <td>{{ pay }}</td>
-                </tr>
-            </table>
-        </table>
-	</div>
+        <!-- </div> -->
+    </div>
 </template>
 
 <script>
-import page1 from './pages/page1'
 
 export default {
     name: 'app',
     data() {
         return {
-            numberla: 0,
-            mdfklist:[],
-            timer: null,
         }
     },
     components: {
-        // page1
     },
     methods: {
-        numberplus() {
-            if( this.mdfklist.length < 20) {
-                // this.numberla += 1;
-                this.timer = setInterval(() => {
-                    if( this.mdfklist.length < 20) {
-                        let pay = this.payla();
-                        let job = this.jobla();
-                        this.mdfklist.push({
-                            job,
-                            pay,
-                        });
-                    } else {
-                        clearInterval(this.timer);
-                        alert("別再按了，已經太多人了");
-                    }
-                }, 100);
-            } else {
-                alert("別再按了，已經太多人了")
-            }
-        },
-        numberminus() {
-            if(this.mdfklist.length) {
-                // this.numberla -= 1;
-                this.timer = setInterval(() => {
-                    this.mdfklist.pop();
-                },100);    
-            }
-            else {
-                alert("別再按了，已經沒人了")
-            }
-        },
-        stop() {
-            clearInterval(this.timer);
-        },
-        numberlaplus() {
-            this.timer = setInterval(() => {this.numberla++},100)
-        },
-        numberlaminus() {
-            this.timer = setInterval(() => {this.numberla--},100)
-        },
-        payla() {
-            return Math.max(Math.floor((Math.random() * 100)*1000),25000)
-        },
-        jobla() {
-            var joblist = [
-                "人資", "行銷", "企劃", "法務", "餐飲", "旅遊", "物流", "營建", "醫療", "學術", "軍警", "金融", "資訊", "軟體", "品管", "環衛"
-                ],
-            longla = joblist.length,
-            fkla = Math.floor(Math.random() * longla);
-            return joblist[fkla];
-        },
+        
+    },
+    mounted() {
+        this.$store.dispatch('getData')
+    },
+    created() {
+        window.app = this;
     },
     computed: {
-        LoopLength() {
-            return Math.min(Math.abs(+this.numberla),20);
-        },
-        jiazong() {
-            return this.numberla + this.mdfklist.length;
-        }
-        // jobla() {
-        //     let long = this.joblist.length,
-        //         i = Math.floor(Math.random() * long);
-        //     return this.joblist[i];
-        // }
+
     },
-    // mixins: [
-    //     SomeVue
-    // ],
-    // created(){
-    // }
 }
 </script>
 
 <style>
 body{
+    margin: 0 auto;
+}
+
+.main {
+    width: 500px;
+    position: absolute;
+    margin: auto;
+    background-color: #f5e9ad;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 40px;
+    box-shadow: 5px 5px 10px grey;
+}
+
+.mainbefore {
+    text-align: center;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+.warning {
+    color: red;
     margin: 0;
 }
 
+.bar {
+    width: 250px;
+    height: 40px;
+    font-size: 22px;
+    background-color: #cccccc;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+.loginB {
+    padding: 9px 25px;
+    position: absolute;
+    bottom: 25px;
+    transform: translate(-50%, 0);
+    border-radius: 10px
+}
+
+.mainafter > div:last-child {
+    height: 100%;
+    width: 70%;
+}
+
+.mainafter > div {
+    float: left;
+}
+
+.baobuttons {
+    box-sizing: border-box;
+    padding: 50px 0;
+    width: 30%;
+}
+
+.buttonsla {
+    width: 100%;
+    height: 50px;
+    background-color: #e0b272;
+}
+
+.page {
+    text-align: center;
+}
+
+.page .times {
+    padding-top: 80px;
+    overflow: hidden;
+}
+
+.extra {
+    height: 80%;
+}
+
 </style>
+
+// ref -> 將物件作標籤，類似ID的功能
+// ex. <div ref = "fuuu"></div>
+// 此物件(div)即成為一個名為"fuuu"的元素被匯入this.$ref中
+// 可以藉由 this.$ref.fuuu 的方式讀取到此物件
